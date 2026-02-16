@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<title>Happy New Year T Q D 😘</title>
+		<title>Happy New Year To Me 😘</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<meta name="mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,38 +53,37 @@
 				}
 			}
 
-			/* Layer chứa lời chúc bay trên nền pháo hoa - ĐÃ TỐI ƯU */
+			/* Layer chứa lời chúc bay trên nền pháo hoa */
 			.wishes-layer {
 				position: absolute;
 				inset: 0;
 				z-index: 10;
 				pointer-events: none;
-				/* Bỏ transform-style: preserve-3d để tiết kiệm GPU */
-				/* Bỏ will-change vì không cần thiết cho container */
+				transform: translateZ(0);
+				-webkit-transform: translateZ(0);
 			}
 
-			/* Tắt transition khi đang drag để giảm lag */
+			/* Tắt transition khi đang drag */
 			.wishes-layer.dragging {
 				transition: none;
 			}
 
-			/* Wrapper anim bay lên (dùng transform riêng) - ĐÃ TỐI ƯU */
+			/* Wrapper anim bay lên */
 			.wish-wrapper {
 				position: absolute;
 				bottom: -3rem;
 				left: 50%;
-				transform: translateX(-50%) translateY(0);
+				transform: translate3d(-50%, 0, 0);
+				-webkit-transform: translate3d(-50%, 0, 0);
 				opacity: 0;
 				pointer-events: none;
-				/* Chỉ thêm will-change khi đang animate */
 			}
 
-			/* Animation đang chạy - thêm will-change */
 			.wish-wrapper.wish-animate {
 				will-change: transform, opacity;
 			}
 
-			/* Câu chúc - GIẢM SHADOW CHO MOBILE */
+			/* Câu chúc - DESKTOP: Full effects */
 			.wish-text {
 				display: inline-block;
 				font-size: 1.1rem;
@@ -96,12 +95,18 @@
 				white-space: nowrap;
 				transform-origin: center center;
 				pointer-events: auto;
-				/* Shadow giảm trên desktop */
-				text-shadow: 0 0 8px rgba(255, 105, 180, 0.8);
-				box-shadow: 0 0 16px rgba(255, 105, 180, 0.6);
+				transform: translateZ(0);
+				-webkit-transform: translateZ(0);
+				/* Desktop: Full shadow */
+				text-shadow:
+					0 0 6px rgba(255, 105, 180, 0.9),
+					0 0 18px rgba(255, 20, 147, 0.8);
+				box-shadow:
+					0 0 14px rgba(255, 105, 180, 0.7),
+					0 0 32px rgba(255, 20, 147, 0.4);
 			}
 
-			/* Responsive cho mobile - GIẢM SHADOW NHIỀU HƠN */
+			/* MOBILE: Giảm mạnh shadow để tăng performance */
 			@media (max-width: 768px) {
 				.wish-text {
 					font-size: 0.9rem;
@@ -118,9 +123,9 @@
 					overflow: hidden;
 					text-overflow: ellipsis;
 					line-height: 1.5;
-					/* Giảm mạnh shadow trên tablet */
-					text-shadow: 0 0 4px rgba(255, 105, 180, 0.6);
-					box-shadow: 0 0 8px rgba(255, 105, 180, 0.4);
+					/* Giảm shadow: 1 layer blur nhỏ */
+					text-shadow: 0 0 4px rgba(255, 105, 180, 0.7);
+					box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
 				}
 			}
 
@@ -130,27 +135,25 @@
 					padding: 0.3rem 0.85rem;
 					max-width: 94vw;
 					min-width: 180px;
-					-webkit-line-clamp: 2;
-					line-clamp: 2;
 					line-height: 1.4;
-					/* Chỉ giữ shadow rất nhẹ trên mobile */
-					text-shadow: 0 0 3px rgba(255, 105, 180, 0.5);
-					box-shadow: 0 0 6px rgba(255, 105, 180, 0.3);
+					/* Shadow tối thiểu */
+					text-shadow: 0 0 3px rgba(255, 105, 180, 0.6);
+					box-shadow: 0 0 8px rgba(255, 105, 180, 0.4);
 				}
 			}
 
-			/* Bay chậm đều từ dưới lên trên - ĐÃ TỐI ƯU */
+			/* Animation bay lên - tối ưu cho mobile */
 			@keyframes wishFloatUp {
 				0% {
 					opacity: 0;
-					transform: translateX(-50%) translateY(10vh);
+					transform: translate3d(-50%, 10vh, 0);
 				}
 				15% {
 					opacity: 1;
 				}
 				100% {
 					opacity: 0;
-					transform: translateX(-50%) translateY(-110vh);
+					transform: translate3d(-50%, -110vh, 0);
 				}
 			}
 
@@ -158,7 +161,7 @@
 				animation: wishFloatUp 7s linear forwards;
 			}
 
-			/* Ảnh bay lên cùng câu chúc - ĐÃ TỐI ƯU */
+			/* Ảnh bay lên - DESKTOP: Full effects */
 			.wish-image {
 				display: inline-block;
 				width: 120px;
@@ -168,28 +171,33 @@
 				border: 3px solid rgba(255, 192, 203, 0.9);
 				transform-origin: center center;
 				pointer-events: auto;
-				/* Shadow giảm cho desktop */
-				box-shadow: 0 0 12px rgba(255, 105, 180, 0.5);
+				transform: translateZ(0);
+				-webkit-transform: translateZ(0);
+				/* Desktop: Full shadow + animation */
+				box-shadow:
+					0 0 20px rgba(255, 105, 180, 0.8),
+					0 0 40px rgba(255, 20, 147, 0.6),
+					0 0 60px rgba(255, 20, 147, 0.4),
+					inset 0 0 20px rgba(255, 192, 203, 0.3);
 			}
 
-			/* Desktop - animation nhẹ */
+			/* Desktop animation */
 			@media (min-width: 769px) {
 				.wish-image {
-					animation: imageGlowDesktop 2s ease-in-out infinite alternate;
+					animation: imageGlow 2s ease-in-out infinite alternate;
 				}
 			}
 
-			/* Responsive ảnh bay lên cho mobile - TẮT ANIMATION */
+			/* MOBILE: Giảm shadow + TẮT animation */
 			@media (max-width: 768px) {
 				.wish-image {
 					width: 80px;
 					height: 80px;
 					border-width: 2px;
 					border-radius: 8px;
-					/* Giảm shadow trên tablet */
-					box-shadow: 0 0 8px rgba(255, 105, 180, 0.4);
-					/* TẮT animation trên tablet */
-					animation: none;
+					/* Shadow giảm + không animation */
+					box-shadow: 0 0 12px rgba(255, 105, 180, 0.6);
+					animation: none !important;
 				}
 			}
 
@@ -199,22 +207,29 @@
 					height: 60px;
 					border-width: 2px;
 					border-radius: 6px;
-					/* Shadow rất nhẹ trên mobile */
-					box-shadow: 0 0 6px rgba(255, 105, 180, 0.3);
-					/* TẮT animation trên mobile */
-					animation: none;
+					/* Shadow tối thiểu */
+					box-shadow: 0 0 8px rgba(255, 105, 180, 0.5);
+					animation: none !important;
 				}
 			}
 
-			/* Animation glow - CHỈ CHO DESKTOP */
-			@keyframes imageGlowDesktop {
+			/* Animation glow - CHỈ desktop */
+			@keyframes imageGlow {
 				0% {
-					box-shadow: 0 0 12px rgba(255, 105, 180, 0.5);
+					box-shadow:
+						0 0 20px rgba(255, 105, 180, 0.8),
+						0 0 40px rgba(255, 20, 147, 0.6),
+						0 0 60px rgba(255, 20, 147, 0.4),
+						inset 0 0 20px rgba(255, 192, 203, 0.3);
 					border-color: rgba(255, 192, 203, 0.9);
 				}
 				100% {
-					box-shadow: 0 0 20px rgba(255, 105, 180, 0.7);
-					border-color: rgba(255, 255, 255, 0.9);
+					box-shadow:
+						0 0 30px rgba(255, 105, 180, 1),
+						0 0 60px rgba(255, 20, 147, 0.9),
+						0 0 90px rgba(255, 20, 147, 0.7),
+						inset 0 0 30px rgba(255, 192, 203, 0.5);
+					border-color: rgba(255, 255, 255, 1);
 				}
 			}
 
@@ -223,12 +238,12 @@
 				position: absolute;
 				bottom: -3rem;
 				left: 50%;
-				transform: translateX(-50%) translateY(0);
+				transform: translate3d(-50%, 0, 0);
+				-webkit-transform: translate3d(-50%, 0, 0);
 				opacity: 0;
 				pointer-events: none;
 			}
 
-			/* Animation đang chạy - thêm will-change */
 			.wish-image-wrapper.wish-animate {
 				will-change: transform, opacity;
 			}
@@ -239,14 +254,15 @@
 				display: none !important;
 			}
 
-			/* TỐI ƯU CHO MOBILE - Giảm motion khi người dùng bật reduce motion */
-			@media (prefers-reduced-motion: reduce) {
-				.wish-text,
-				.wish-image {
-					animation-duration: 0.01ms !important;
-					animation-iteration-count: 1 !important;
-					transition-duration: 0.01ms !important;
-				}
+			/* TỐI ƯU CHUNG */
+			* {
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+			}
+
+			canvas {
+				transform: translateZ(0);
+				-webkit-transform: translateZ(0);
 			}
 		</style>
 		<meta name="msapplication-TileColor" content="#000000" />
@@ -397,5 +413,39 @@
 		<script src="./js/Stage.js"></script>
 		<script src="./js/MyMath.js"></script>
 		<script src="./js/script.js"></script>
+		
+		<!-- Script giới hạn số lượng wishes đồng thời trên mobile -->
+		<script>
+			(function() {
+				// Detect mobile
+				const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+					|| window.innerWidth <= 768;
+				
+				if (isMobile) {
+					// Giới hạn số wishes hiển thị đồng thời trên mobile
+					const MAX_WISHES_MOBILE = 3;
+					let currentWishes = 0;
+					
+					// Override animation end để giảm số wishes
+					const originalCreateWish = window.createFloatingWish;
+					if (originalCreateWish) {
+						window.createFloatingWish = function(...args) {
+							if (currentWishes >= MAX_WISHES_MOBILE) {
+								return; // Skip nếu quá nhiều
+							}
+							currentWishes++;
+							const result = originalCreateWish.apply(this, args);
+							
+							// Giảm counter sau 7s (animation duration)
+							setTimeout(() => {
+								currentWishes--;
+							}, 7000);
+							
+							return result;
+						};
+					}
+				}
+			})();
+		</script>
 	</body>
 </html>
